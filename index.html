@@ -31,8 +31,12 @@
     display: none;
   }
   
-  #keyWorkCovidAnswer.postcard-textarea-answer {
+  #keyWorkCovidExperience.postcard-answer {
     height: 90px;
+  }
+
+  .buttons-row {
+    margin: 10px;
   }
 }
 
@@ -65,8 +69,12 @@
     height: 200px;
   }
   
-  #keyWorkCovidAnswer.postcard-textarea-answer {
+  #keyWorkCovidExperience.postcard-answer {
     height: 130px;
+  }
+
+  .buttons-row {
+    margin: 10px auto;
   }
 }
 
@@ -74,7 +82,15 @@
   #interactivePostcardForm {
     width: 900px;
   }
-  
+   
+  .postcard-label.question.obscured-left {
+    text-align: center;
+  }
+
+  .postcard-answer.obscured-right {
+    width: 90%;
+  }
+
   #gndBadgeImage {
     width: 135px;
     margin-left: calc(50% - 67.5px);
@@ -88,10 +104,6 @@
     padding-left: 30px;
 }
   
-  .responsive-linebreak {
-    display: inline-block;
-  }
-  
   .square-postcard {
     background-size: 900px;
   }
@@ -100,15 +112,24 @@
     display: inline;
   }
   
-  .postcard-column.right .postcard-question {
-    padding-left: 30px;
+  .responsive-linebreak {
+    display: inline-block;
   }
+
+  /*.postcard-column.right .postcard-question {
+    padding-left: 30px;
+  }*/
+
+  .buttons-row {
+    padding: 0 100px;
+}
 
 }
 
-body, .postcard-textarea-answer {
+body, .postcard-answer, #submitBtn {
     font-family: Ringside Regular A,Ringside Regular B,Rubik,Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,sans-serif;
     font-size: 14px;
+    font-weight: 500;
 }
 
 p {
@@ -126,7 +147,7 @@ p {
 
 input[type="button"] {
   color: white;
-  background-color: blue;
+  background-color: royalblue;
   font-weight: bold;
   border: none;
   padding: 7px;
@@ -135,8 +156,13 @@ input[type="button"] {
 
 #submitBtn {
   position: relative;
-  margin-left: 50px;
   margin-bottom: 10px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.buttons-row {
+  width: 430px;
 }
 
 textarea:focus, input:focus {
@@ -172,25 +198,39 @@ textarea:focus, input:focus {
   border-radius: 10px;
 }
 
-.postcard-question {
+.postcard-label {
   display: block;
   color: red;
 }
 
-.postcard-textarea-answer {
+textarea.postcard-answer {
+  resize: none;
+  margin-top: 8px;
+}
+
+input[type="text"].postcard-answer {
+  margin-bottom: 8px;
+}
+
+.postcard-answer {
   display: block;
   width: 96%;
-  resize: none;
   background-color: #e4e4e4;
   border-radius: 10px;
-  margin-top: 8px;
   padding: 2%;
   border: none;
-  color: #4B0082;
+  color: #000;
+}
+
+.textarea-label {
+  margin-left: 12px;
+  margin-top: 4px;
+  display: block;
 }
   
-#keyWorkClimateOtherAnswer.postcard-textarea-answer {
-  height: 30px;  
+#keyWorkClimateOtherAnswer.postcard-answer {
+  height: 30px;
+  margin-top: 4px;  
 }
 
 .tab {
@@ -214,28 +254,36 @@ textarea:focus, input:focus {
   </head>
   <body>
     <form id="interactivePostcardForm">
-      <div class="personal-details-form">   
-        <label for="name">Name:</label>
-        <input type="text" name="name"><br>
-        <label for="occupation">Occupation: *</label>
-        <input type="text" name="occupation"><br>
-        <label for="postcodeDistrict">Postcode district: *</label>
-        <input type="text" name="postcodeDistrict" placeholder="E.g. SW19 5">
-      </div>
       <div class="square-postcard">
         <img id="gndBadgeImage" alt="GND badge">
         <p class="postcard-advice">Write your story:</p>
         <div class="postcard-form">
-          <div class="postcard-column left">
+          <div class="postcard-column">
             <div class="postcard-column-fields">
-              <label class="postcard-question">What was your experience of key <br class="responsive-linebreak">work during the <strong>coronavirus crisis</strong>?</label>
-              <textarea id="keyWorkCovidExperience" name="keyWorkCovidExperience" class="postcard-textarea-answer"></textarea>
+              <div class="postcard-column-field">
+                <label class="postcard-label" for="name">Name:</label>
+                <input type="text" class="postcard-answer obscured-right" name="name">
+              </div>
+              <div class="postcard-column-field">
+                <label class="postcard-label" for="occupation">Occupation: *</label>
+                <input type="text" class="postcard-answer" name="occupation">
+              </div>
+              <div class="postcard-column-field">
+                <label class="postcard-label" for="postcodeDistrict">Postcode district: *</label>
+                <input type="text" class="postcard-answer" name="postcodeDistrict" placeholder="E.g. SW19 5">
+              </div>
+            </div>
+          </div>
+          <div class="postcard-column">
+            <div class="postcard-column-fields">
+              <label class="postcard-label question obscured-left">What was your experience of key <br class="responsive-linebreak">work during the <strong>coronavirus crisis</strong>?</label>
+              <textarea id="keyWorkCovidExperience" name="keyWorkCovidExperience" class="postcard-answer"></textarea>
             </div>
             <p id="successAdvice"></p>
           </div>
           <div class="postcard-column right">
             <div class="postcard-column-fields">
-              <label class="postcard-question"><span class="tab"></span>What type of key work do you think we need to combat the <strong>climate crisis</strong>?</label>
+              <label class="postcard-label question checkbox-question">What type of key work do you think we need to combat the <strong>climate crisis</strong>?</label>
               <input type="checkbox" name="freeBroadband">
               <label class="checkbox-label" for="freeBroadband">Free broadband</label><br>
               <input type="checkbox" name="nationaliseSausages">
@@ -244,13 +292,14 @@ textarea:focus, input:focus {
               <label class="checkbox-label" for="careWorkersFairPay">Fair pay for careworkers</label><br>
               <input type="checkbox" name="communityEnergy">
               <label class="checkbox-label" for="communityEnergy">Community energy</label><br>
-              <input type="checkbox" name="otherChecked">
-              <label class="checkbox-label" for="otherChecked">Other (please state):</label><br>
-              <textarea id="keyWorkClimateOtherAnswer" name="otherText" class="postcard-textarea-answer"></textarea>
+              <label class="textarea-label">Other (please state):</label>
+              <textarea id="keyWorkClimateOtherAnswer" name="otherText" class="postcard-answer"></textarea>
             </div>
           </div>
+          <div class="buttons-row">
+            <input type="button" id="submitBtn" value="Submit">
         </div>
-        <input type="button" id="submitBtn" value="Submit">
+        </div>
       </div>  
     </form>
     <script>
@@ -261,9 +310,18 @@ textarea:focus, input:focus {
         //.withSuccessHandler(onBadgeImageLoaded)
         //.loadBadgeImageBytes();
     
+      function blinkColor(el, highlightColor) {
+        let colorButton = el;
+        let originalColor = colorButton.style.backgroundColor;
+        colorButton.style.backgroundColor = highlightColor;  
+        setTimeout(() => {colorButton.style.backgroundColor = originalColor}, 200);
+      }
+
       var submitBtn = document.getElementById('submitBtn');
       submitBtn.addEventListener('click',
         function(e){
+          blinkColor(this, "cornflowerblue");
+          this.disabled = true;
           var name = document.getElementsByName('name').item(0).value;       
           var occupation = document.getElementsByName('occupation').item(0).value;
           var postcodeDistrict = document.getElementsByName('postcodeDistrict').item(0).value;
@@ -272,7 +330,6 @@ textarea:focus, input:focus {
           var nationaliseSausages = document.getElementsByName('nationaliseSausages').item(0).checked;
           var careWorkersFairPay = document.getElementsByName('careWorkersFairPay').item(0).checked;
           var communityEnergy = document.getElementsByName('communityEnergy').item(0).checked;
-          var otherChecked = document.getElementsByName('otherChecked').item(0).checked;
           var otherText = document.getElementsByName('otherText').item(0).value;
           
           google.script.run
@@ -304,16 +361,18 @@ textarea:focus, input:focus {
         
         function onSuccessfulUpload(data){
           var successAdvice = document.getElementById('successAdvice');
-          var postcardLeftColumn = document.querySelector('.postcard-column.left');
-          var postcardLeftFieldsWrapper = postcardLeftColumn.querySelector('.postcard-column-fields');
-          var postcardRightColumn = document.querySelector('.postcard-column.right');
+          var postcardFirstColumnFieldsWrapper = document.querySelector('.postcard-column .postcard-column-fields');
+          //var postcardLeftFieldsWrapper = postcardFirstColumn.querySelector('.postcard-column-fields');
+          var postcardNotFirstColumns = document.querySelector('.postcard-column:not(:first-child)');
           var postcard = document.querySelector('.square-postcard');
           
           successAdvice.innerHTML = "Upload successful! Thank you for giving your story.";
           successAdvice.style.display = 'block';
           successAdvice.style.paddingTop = '70px';
-          postcardLeftFieldsWrapper.style.display = 'none';
-          postcardRightColumn.style.display = 'none';
+          postcardFirstColumnFieldsWrapper.style.display = 'none';
+          postcardNotFirstColumns.forEach(function (el) {
+            el.style.display  = 'none';
+          });
         
           var x = window.matchMedia("(max-width: 900px)");
             padSuccessAdviceText(x, successAdvice); // Call listener function at run time
