@@ -284,14 +284,18 @@ input[type="text"].postcard-answer {
           <div class="postcard-column right">
             <div class="postcard-column-fields">
               <label class="postcard-label question checkbox-question">What type of key work do you think we need to combat the <strong>climate crisis</strong>?</label>
-              <input type="checkbox" name="freeBroadband">
-              <label class="checkbox-label" for="freeBroadband">Free broadband</label><br>
-              <input type="checkbox" name="nationaliseSausages">
-              <label class="checkbox-label" for="nationaliseSausages">Nationalise sausages</label><br>
-              <input type="checkbox" name="careWorkersFairPay">
-              <label class="checkbox-label" for="careWorkersFairPay">Fair pay for careworkers</label><br>
-              <input type="checkbox" name="communityEnergy">
-              <label class="checkbox-label" for="communityEnergy">Community energy</label><br>
+              <input type="checkbox" name="choice1" value="Housing insulation">
+              <label class="checkbox-label" for="choice1">Housing insulation</label><br>
+              <input type="checkbox" name="choice2" value="Local food cooperatives">
+              <label class="checkbox-label" for="choice2">Local food cooperatives</label><br>
+              <input type="checkbox" name="choice3" value="Education">
+              <label class="checkbox-label" for="choice3">Education</label><br>
+              <input type="checkbox" name="choice4" value="Health and social care">
+              <label class="checkbox-label" for="choice4">Health and social care</label><br>
+              <input type="checkbox" name="choice5" value="Public renewable energy">
+              <label class="checkbox-label" for="choice5">Public renewable energy</label><br>
+              <input type="checkbox" name="choice6" value="Free electric buses">
+              <label class="checkbox-label" for="choice6">Free electric buses</label><br>
               <label class="textarea-label">Other (please state):</label>
               <textarea id="keyWorkClimateOtherAnswer" name="otherText" class="postcard-answer"></textarea>
             </div>
@@ -338,10 +342,18 @@ input[type="text"].postcard-answer {
           var occupation = document.getElementsByName('occupation').item(0).value;
           var postcodeDistrict = document.getElementsByName('postcodeDistrict').item(0).value;
           var keyWorkCovidExperience = document.getElementById('keyWorkCovidExperience').value;
-          var freeBroadband = document.getElementsByName('freeBroadband').item(0).checked;
-          var nationaliseSausages = document.getElementsByName('nationaliseSausages').item(0).checked;
-          var careWorkersFairPay = document.getElementsByName('careWorkersFairPay').item(0).checked;
-          var communityEnergy = document.getElementsByName('communityEnergy').item(0).checked;
+          var choice1checked = document.getElementsByName('choice1').item(0).checked;
+          var choice2checked = document.getElementsByName('choice2').item(0).checked;
+          var choice3checked = document.getElementsByName('choice3').item(0).checked;
+          var choice4checked = document.getElementsByName('choice4').item(0).checked;
+          var choice5checked = document.getElementsByName('choice5').item(0).checked;
+          var choice6checked = document.getElementsByName('choice6').item(0).checked;
+          var choice1value = document.getElementsByName('choice1').item(0).value;
+          var choice2value = document.getElementsByName('choice2').item(0).value;
+          var choice3value = document.getElementsByName('choice3').item(0).value;
+          var choice4value = document.getElementsByName('choice4').item(0).value;
+          var choice5value = document.getElementsByName('choice5').item(0).value;
+          var choice6value = document.getElementsByName('choice6').item(0).value;
           var otherText = document.getElementsByName('otherText').item(0).value;
           
           google.script.run
@@ -351,11 +363,18 @@ input[type="text"].postcard-answer {
               occupation,
               postcodeDistrict, 
               keyWorkCovidExperience,
-              freeBroadband,
-              nationaliseSausages,
-              careWorkersFairPay,
-              communityEnergy,
-              otherChecked,
+              choice1value,
+              choice1checked,
+              choice2value,
+              choice2checked,
+              choice3value,
+              choice3checked,
+              choice4value,
+              choice4checked,
+              choice5value,
+              choice5checked,
+              choice6value,
+              choice6checked,
               otherText);          
         });
         
