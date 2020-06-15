@@ -375,8 +375,8 @@ input[type="text"].postcard-answer {
           var successAdvice = document.getElementById('successAdvice');
           var postcardFirstColumnFieldsWrapper = document.querySelector('.postcard-column .postcard-column-fields');
           //var postcardLeftFieldsWrapper = postcardFirstColumn.querySelector('.postcard-column-fields');
-          var postcardNotFirstColumns = document.querySelector('.postcard-column:not(:first-child)');
-          var postcard = document.querySelector('.square-postcard');
+          var postcardNotFirstColumns = document.querySelectorAll('.postcard-column:not(:first-child)');
+          var postcardForm = document.querySelector('.postcard-form');
           
           successAdvice.innerHTML = "Upload successful! Thank you for giving your story.";
           successAdvice.style.display = 'block';
@@ -390,7 +390,7 @@ input[type="text"].postcard-answer {
             padSuccessAdviceText(x, successAdvice); // Call listener function at run time
             x.addListener(x => padSuccessAdviceText(x, successAdvice)); // Attach listener function on state changes
           
-          postcard.removeChild(submitBtn);
+            postcardForm.removeChild(submitBtn.parentElement);
         }
         
         function padSuccessAdviceText(breakpointHit, el) {
