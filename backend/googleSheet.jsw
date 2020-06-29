@@ -1,0 +1,45 @@
+const { google } = require("googleapis");
+import { createClient, getSheetId, getTokens } from 'backend/common-googleSheet'
+
+async function createAuthorizedClient() {
+	try {
+		const oAuth2Client = await createClient();
+		let tokens = await getTokens();
+		oAuth2Client.setCredentials(tokens);
+		// const accessToken = await oAuth2Client.refreshAccessToken(tokens); // deprecated
+        const accessToken = oAuth2Client.getAccessToken(); // replaces deprecated API call				
+		oAuth2Client.getTokenInfo(accessToken); // checks validity of tokens
+		return oAuth2Client;
+	} catch (err) {
+		console.log("failed to refresh token" + err);
+	}
+}
+
+export async function saveFormData(values) {
+	const authorizedAuthClient = await createAuthorizedClient();
+	const sheetId = await getSheetId();
+	return insertRow(values, authorizedAuthClient, sheetId);
+}
+
+async function insertRow(values, authClient, ssID) {
+	var sheets = google.sheets('v4');
+	const request = {
+		spreadsheetId: ssID,  // The ID of the spreadsheet to update.
+		valueInputOption: 'RAW',  // How the input data should be interpreted.
+		insertDataOption: 'INSERT_ROWS',  // How the input data should be inserted.
+		range: 'A1:A2', // The A1 notation of a range to search
+						// for a logical table of data. Values will be
+						// appended after the last row of the table.
+		resource: {
+			"values": [
+				values
+			]
+		},
+		auth: authClient,
+	};
+	try {
+		return (await sheets.spreadsheets.values.append(request)).data;
+	} catch (err) {
+		console.log("error in append values" + err);
+	}
+}

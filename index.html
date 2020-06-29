@@ -415,6 +415,12 @@ input + .invalidation-advice {
         validateCheckboxField();
       }
 
+      window.onmessage = (event =>
+      {
+        if (event.data === "ok")
+          onSuccessfulUpload(event.data);
+      });
+
       var submitBtn = document.getElementById('submitBtn');
       submitBtn.addEventListener('click',
         function(e){
@@ -447,9 +453,8 @@ input + .invalidation-advice {
             return;
           }
 
-          google.script.run
-            .withSuccessHandler(onSuccessfulUpload)
-            .uploadData(
+          window.parent.postMessage(
+            [
               personName.value, 
               occupation.value,
               postcodeDistrict.value, 
@@ -466,7 +471,8 @@ input + .invalidation-advice {
               choice5checked,
               choice6value,
               choice6checked,
-              otherText.value);          
+              otherText.value],
+            'https://www.keyworkersforthefuture.com/');
         });
         
         //google.script.run
