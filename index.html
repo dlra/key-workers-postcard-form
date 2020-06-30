@@ -208,6 +208,20 @@ textarea:focus, input:focus {
   display: block;
   color: red;
 }
+  
+.postcard-label.question.checkbox-question {
+  display: inline;
+}
+
+p.question-advice {
+    color: gray;
+    font-size: 13px;
+    display: inline;
+}
+
+.question-wrapper {
+  margin-bottom: 4px;
+}
 
 textarea.postcard-answer {
   resize: none;
@@ -234,7 +248,7 @@ input[name="postcodeDistrict"].postcard-answer {
 
 .textarea-label {
   margin-left: 12px;
-  margin-top: 4px;
+  margin-top: 8px;
   display: block;
 }
   
@@ -264,6 +278,10 @@ input[name="postcodeDistrict"].postcard-answer {
 
 strong {
   font-size: 16px;
+}
+
+p > strong {
+  font-size: 14px;
 }
 
 .invalidation-advice {
@@ -314,8 +332,11 @@ input + .invalidation-advice {
           </div>
           <div class="postcard-column" id="futureKeyWorkQuestionBox">
             <div class="postcard-column-fields">
+              <div class="question-wrapper">
               <label class="postcard-label question checkbox-question">Which public <strong>key work</strong> programmes
                 do you think we need to combat the <strong>climate crisis</strong>?</label>
+              <p class="question-advice">(Tick <strong>ALL</strong> that apply)</p>
+            </div>
               <input type="checkbox" name="choice1" value="Housing insulation">
               <label class="checkbox-label" for="choice1">Housing insulation</label><br>
               <input type="checkbox" name="choice2" value="Local food cooperatives">
