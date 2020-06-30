@@ -398,17 +398,19 @@ input + .invalidation-advice {
         else description.classList.add("hidden");
       }
 
-      var els = document.getElementsByTagName('label');
+      function addClickEventsToFieldLabels() {
+        var els = document.getElementsByTagName('label');
 
-      for (var i = 0; i < els.length; i++)
-      {
-        els[i].addEventListener('click',
-        function(e){
-          var event = new MouseEvent('click');
-          var labelId = this.getAttribute("for");
-          var inputSelector = 'input[name=\"'+ labelId + '\"]';
-          document.querySelector(inputSelector).dispatchEvent(event);
-        });
+        for (var i = 0; i < els.length; i++)
+        {
+          els[i].addEventListener('click',
+          function(e){
+            var event = new MouseEvent('click');
+            var labelId = this.getAttribute("for");
+            var inputSelector = 'input[name=\"'+ labelId + '\"]';
+            document.querySelector(inputSelector).dispatchEvent(event);
+          });
+        }
       }
 
       function blinkColor(el, highlightColor) {
@@ -480,6 +482,8 @@ input + .invalidation-advice {
         validateCheckboxField();
       }
 
+      addClickEventsToFieldLabels();
+      
       window.onmessage = (event =>
       {
         if (event.data === "ok")
