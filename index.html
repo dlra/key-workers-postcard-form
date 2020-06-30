@@ -83,10 +83,14 @@
   #interactivePostcardForm {
     width: 900px;
   }
-   
+
   .postcard-label.question.obscured-left {
-    text-align: center;
-  }
+    padding-left: 12px;
+}
+
+  .postcard-label.question.obscured-left > span.indent {
+    padding-left: 28px;
+}
 
   .postcard-answer.obscured-right {
     width: 90%;
@@ -299,9 +303,10 @@ input + .invalidation-advice {
           <div class="postcard-column">
             <div class="postcard-column-fields">
               <label class="postcard-label question obscured-left">
-                <strong>If you’re a key worker</strong>, what was your experience like during the coronavirus crisis?
+                <span class="indent"></span>
+                <strong>If you're a key worker</strong>, what was your experience like during the coronavirus crisis?
                 <strong>If not</strong>, which key workers (teachers, postal workers, bus drivers, etc)
-                did you appreciate during the coronavirus crisis and why?"
+                did you appreciate during the coronavirus crisis, and why?
               </label>
               <input type="hidden" id="covidQuestionVersionNo" name="covidQuestionVersionNo" value="2">
               <textarea id="keyWorkCovidExperience" name="keyWorkCovidExperience" class="postcard-answer"></textarea>
