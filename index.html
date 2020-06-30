@@ -298,7 +298,12 @@ input + .invalidation-advice {
           </div>
           <div class="postcard-column">
             <div class="postcard-column-fields">
-              <label class="postcard-label question obscured-left">What was your experience of <strong>key <br class="responsive-linebreak">work</strong> during the <strong>coronavirus crisis</strong>?</label>
+              <label class="postcard-label question obscured-left">
+                <strong>If you’re a key worker</strong>, what was your experience like during the coronavirus crisis?
+                <strong>If not</strong>, which key workers (teachers, postal workers, bus drivers, etc)
+                did you appreciate during the coronavirus crisis and why?"
+              </label>
+              <input type="hidden" id="covidQuestionVersionNo" name="covidQuestionVersionNo" value="2">
               <textarea id="keyWorkCovidExperience" name="keyWorkCovidExperience" class="postcard-answer"></textarea>
             </div>
           </div>
@@ -432,6 +437,7 @@ input + .invalidation-advice {
           occupation = document.getElementsByName('occupation').item(0);
           postcodeDistrict = document.getElementsByName('postcodeDistrict').item(0);
           keyWorkCovidExperience = document.getElementById('keyWorkCovidExperience');
+          covidQuestionVersionNo = document.getElementById('covidQuestionVersionNo');
           choice1checked = document.getElementsByName('choice1').item(0).checked;
           choice2checked = document.getElementsByName('choice2').item(0).checked;
           choice3checked = document.getElementsByName('choice3').item(0).checked;
@@ -459,6 +465,7 @@ input + .invalidation-advice {
               occupation.value,
               postcodeDistrict.value, 
               keyWorkCovidExperience.value,
+              covidQuestionVersionNo.value,
               choice1value,
               choice1checked,
               choice2value,
