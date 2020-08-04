@@ -375,204 +375,187 @@ input + .invalidation-advice {
            choice6checked, choice1value, choice2value, choice3value, choice4value,
            choice5value, choice6value, otherText;
 
-      //google.script.run
-        //.withSuccessHandler(onBadgeImageLoaded)
-        //.loadBadgeImageBytes();
+    addClickEventsToFieldLabels();
       
-      function togglePostcodeSectorHelp() {
-        var description = document.getElementById("postcodeSectorDescription");
-        if (description.className.includes("hidden"))
-          description.classList.remove("hidden");
-        else description.classList.add("hidden");
-      }
+    var submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click',
+      function(e){
+        blinkColor(this, "cornflowerblue");
 
-      function addClickEventsToFieldLabels() {
-        var els = document.getElementsByTagName('label');
+        this.disabled = true;
 
-        for (var i = 0; i < els.length; i++)
-        {
-          els[i].addEventListener('click',
-          function(e){
-            var event = new MouseEvent('click');
-            var labelId = this.getAttribute("for");
-            var inputSelector = 'input[name=\"'+ labelId + '\"]';
-            document.querySelector(inputSelector).dispatchEvent(event);
-          });
-        }
-      }
-
-      function blinkColor(el, highlightColor) {
-        let colorButton = el;
-        let originalColor = colorButton.style.backgroundColor;
-        colorButton.style.backgroundColor = highlightColor;  
-        setTimeout(() => {colorButton.style.backgroundColor = originalColor}, 200);
-      }
-
-      function addInvalidationAdvice(el, adviceText) {
-        if (el.nextElementSibling && 
-          (el.nextElementSibling.className == "invalidation-advice" ||
-          (el.nextElementSibling.nextElementSibling && 
-          el.nextElementSibling.nextElementSibling.className == "invalidation-advice")))
-          return;
-
-        var invalidAdvice = document.createElement("p");
-        var adviceContent = document.createTextNode(adviceText);
-        var beforeNode = document.querySelector("[name=\"" + el.name + "\"].postcard-answer");
-        
-        if (beforeNode.nextElementSibling && 
-          beforeNode.nextElementSibling.className === "question-helper") {
-          beforeNode = beforeNode.nextElementSibling;
-          }
-
-        invalidAdvice.className = "invalidation-advice";
-        invalidAdvice.appendChild(adviceContent);
-        beforeNode.parentNode.insertBefore(invalidAdvice, beforeNode.nextSibling);
-      }
-
-      function removeInvalidationAdvice(el) {
-        if (el.nextSibling.tagName == "P")
-          el.nextSibling.remove();
-      }
-
-      function validateGeneralField(el) {
-        if (el.value=="") {
-          addInvalidationAdvice(el, "Please fill in this field");
+        personFirstName = document.getElementsByName('personFirstName').item(0);       
+        occupation = document.getElementsByName('occupation').item(0);
+        postcodeSector = document.getElementsByName('postcodeSector').item(0);
+        borough = document.getElementsByName('borough').item(0);
+        keyWorkCovidExperience = document.getElementById('keyWorkCovidExperience');
+        covidQuestionVersionNo = document.getElementById('covidQuestionVersionNo');
+        choice1checked = document.getElementsByName('choice1').item(0).checked;
+        choice2checked = document.getElementsByName('choice2').item(0).checked;
+        choice3checked = document.getElementsByName('choice3').item(0).checked;
+        choice4checked = document.getElementsByName('choice4').item(0).checked;
+        choice1value = document.getElementsByName('choice1').item(0).value;
+        choice2value = document.getElementsByName('choice2').item(0).value;
+        choice3value = document.getElementsByName('choice3').item(0).value;
+        choice4value = document.getElementsByName('choice4').item(0).value;
+        otherText = document.getElementsByName('otherText').item(0);
           
-          return false;
-        }
-        
-        removeInvalidationAdvice(el);
-        return true;
-      }
-
-      function validateCheckboxField() {
-        if (!choice1checked &&
-          !choice2checked &&
-          !choice3checked &&
-          !choice4checked &&
-          !choice5checked &&
-          !choice6checked &&
-          otherText.value=="") {
-            addInvalidationAdvice(otherText, "Please pick an option or add your own idea");
-
-          return false;
+        var successful = validate();
+          
+        if (!successful) {
+          this.disabled = false;
+          return;
         }
 
-        removeInvalidationAdvice(otherText);
-        return true;
-      }
-
-      function validate() {
-        return validateGeneralField(personFirstName) &
-        validateGeneralField(occupation) &
-        validateGeneralField(postcodeSector) &
-        validateGeneralField(keyWorkCovidExperience) &
-        validateCheckboxField();
-      }
-
-      addClickEventsToFieldLabels();
+        window.parent.postMessage(
+          [
+            personFirstName.value, 
+            occupation.value,
+            postcodeSector.value, 
+            borough.value,
+            keyWorkCovidExperience.value,
+            covidQuestionVersionNo.value,
+            choice1value,
+            choice1checked,
+            choice2value,
+            choice2checked,
+            choice3value,
+            choice3checked,
+            choice4value,
+            choice4checked,
+            choice5value,
+            choice5checked,
+            choice6value,
+            choice6checked,
+            otherText.value],
+          'https://www.keyworkersforthefuture.com/');
+    });
       
+    function togglePostcodeSectorHelp() {
+      var description = document.getElementById("postcodeSectorDescription");
+      if (description.className.includes("hidden"))
+        description.classList.remove("hidden");
+      else description.classList.add("hidden");
+    }
+
+    function addClickEventsToFieldLabels() {
+      var els = document.getElementsByTagName('label');
+
+      for (var i = 0; i < els.length; i++)
+      {
+        els[i].addEventListener('click',
+        function(e){
+          var event = new MouseEvent('click');
+          var labelId = this.getAttribute("for");
+          var inputSelector = 'input[name=\"'+ labelId + '\"]';
+          document.querySelector(inputSelector).dispatchEvent(event);
+        });
+      }
+    }
+
+    function blinkColor(el, highlightColor) {
+      let colorButton = el;
+      let originalColor = colorButton.style.backgroundColor;
+      colorButton.style.backgroundColor = highlightColor;  
+      setTimeout(() => {colorButton.style.backgroundColor = originalColor}, 200);
+    }
+
+    function addInvalidationAdvice(el, adviceText) {
+      if (el.nextElementSibling && 
+        (el.nextElementSibling.className == "invalidation-advice" ||
+        (el.nextElementSibling.nextElementSibling && 
+        el.nextElementSibling.nextElementSibling.className == "invalidation-advice")))
+        return;
+
+      var invalidAdvice = document.createElement("p");
+      var adviceContent = document.createTextNode(adviceText);
+      var beforeNode = document.querySelector("[name=\"" + el.name + "\"].postcard-answer");
+        
+      if (beforeNode.nextElementSibling && 
+        beforeNode.nextElementSibling.className === "question-helper") {
+        beforeNode = beforeNode.nextElementSibling;
+      }
+
+      invalidAdvice.className = "invalidation-advice";
+      invalidAdvice.appendChild(adviceContent);
+      beforeNode.parentNode.insertBefore(invalidAdvice, beforeNode.nextSibling);
+    }
+
+    function removeInvalidationAdvice(el) {
+      if (el.nextSibling.tagName == "P")
+        el.nextSibling.remove();
+    }
+
+    function validateGeneralField(el) {
+      if (el.value=="") {
+        addInvalidationAdvice(el, "Please fill in this field");
+        
+        return false;
+      }
+        
+      removeInvalidationAdvice(el);
+      return true;
+    }
+
+    function validateCheckboxField() {
+      if (!choice1checked &&
+        !choice2checked &&
+        !choice3checked &&
+        !choice4checked &&
+        !choice5checked &&
+        !choice6checked &&
+        otherText.value=="") {
+          addInvalidationAdvice(otherText, "Please pick an option or add your own idea");
+
+        return false;
+      }
+
+      removeInvalidationAdvice(otherText);
+      return true;
+    }
+
+    function validate() {
+      return validateGeneralField(personFirstName) &
+      validateGeneralField(occupation) &
+      validateGeneralField(postcodeSector) &
+      validateGeneralField(keyWorkCovidExperience) &
+      validateCheckboxField();
+    }
+
       window.onmessage = (event =>
       {
         if (event.data === "ok")
           onSuccessfulUpload(event.data);
       });
 
-      var submitBtn = document.getElementById('submitBtn');
-      submitBtn.addEventListener('click',
-        function(e){
-          blinkColor(this, "cornflowerblue");
+    function onSuccessfulUpload(data){
+      var successAdvice = document.getElementById('successAdvice');
+      var postcardFirstColumnFieldsWrapper = document.querySelector('.postcard-column .postcard-column-fields');
+      var postcardNotFirstColumns = document.querySelectorAll('.postcard-column:not(:first-child)');
+      var postcardForm = document.querySelector('.postcard-form');
+        
+      successAdvice.innerHTML = "Upload successful! Thank you for giving your story.";
+      successAdvice.style.display = 'block';
+      successAdvice.style.paddingTop = '70px';
+      postcardFirstColumnFieldsWrapper.style.display = 'none';
+      postcardNotFirstColumns.forEach(function (el) {
+        el.style.display  = 'none';
+      });
+        
+      var x = window.matchMedia("(max-width: 900px)");
+      padSuccessAdviceText(x, successAdvice); // Call listener function at run time
+      x.addListener(x => padSuccessAdviceText(x, successAdvice)); // Attach listener function on state changes
 
-          this.disabled = true;
-
-          personFirstName = document.getElementsByName('personFirstName').item(0);       
-          occupation = document.getElementsByName('occupation').item(0);
-          postcodeSector = document.getElementsByName('postcodeSector').item(0);
-          borough = document.getElementsByName('borough').item(0);
-          keyWorkCovidExperience = document.getElementById('keyWorkCovidExperience');
-          covidQuestionVersionNo = document.getElementById('covidQuestionVersionNo');
-          choice1checked = document.getElementsByName('choice1').item(0).checked;
-          choice2checked = document.getElementsByName('choice2').item(0).checked;
-          choice3checked = document.getElementsByName('choice3').item(0).checked;
-          choice4checked = document.getElementsByName('choice4').item(0).checked;
-          choice1value = document.getElementsByName('choice1').item(0).value;
-          choice2value = document.getElementsByName('choice2').item(0).value;
-          choice3value = document.getElementsByName('choice3').item(0).value;
-          choice4value = document.getElementsByName('choice4').item(0).value;
-          otherText = document.getElementsByName('otherText').item(0);
-          
-          var successful = validate();
-          
-          if (!successful) {
-            this.disabled = false;
-            return;
-          }
-
-          window.parent.postMessage(
-            [
-              personFirstName.value, 
-              occupation.value,
-              postcodeSector.value, 
-              borough.value,
-              keyWorkCovidExperience.value,
-              covidQuestionVersionNo.value,
-              choice1value,
-              choice1checked,
-              choice2value,
-              choice2checked,
-              choice3value,
-              choice3checked,
-              choice4value,
-              choice4checked,
-              choice5value,
-              choice5checked,
-              choice6value,
-              choice6checked,
-              otherText.value],
-            'https://www.keyworkersforthefuture.com/');
-        });
+      postcardForm.removeChild(submitBtn.parentElement);
+    }
         
-        //google.script.run
-          //.withSuccessHandler(onCoverImageLoaded)
-          //.loadCoverImageBytes();
-              
-        //function onBadgeImageLoaded(bytes) {
-          
-        //}
-        
-        //function onCoverImageLoaded(bytes) {
-          //document.getElementById('postcardBkgndImage').src = "data:image/jpg;base64," + bytes;
-        //}
-        
-        function onSuccessfulUpload(data){
-          var successAdvice = document.getElementById('successAdvice');
-          var postcardFirstColumnFieldsWrapper = document.querySelector('.postcard-column .postcard-column-fields');
-          //var postcardLeftFieldsWrapper = postcardFirstColumn.querySelector('.postcard-column-fields');
-          var postcardNotFirstColumns = document.querySelectorAll('.postcard-column:not(:first-child)');
-          var postcardForm = document.querySelector('.postcard-form');
-          
-          successAdvice.innerHTML = "Upload successful! Thank you for giving your story.";
-          successAdvice.style.display = 'block';
-          successAdvice.style.paddingTop = '70px';
-          postcardFirstColumnFieldsWrapper.style.display = 'none';
-          postcardNotFirstColumns.forEach(function (el) {
-            el.style.display  = 'none';
-          });
-        
-          var x = window.matchMedia("(max-width: 900px)");
-            padSuccessAdviceText(x, successAdvice); // Call listener function at run time
-            x.addListener(x => padSuccessAdviceText(x, successAdvice)); // Attach listener function on state changes
-          
-            postcardForm.removeChild(submitBtn.parentElement);
-        }
-        
-        function padSuccessAdviceText(breakpointHit, el) {
-          if (breakpointHit.matches) { // If media query matches
-            el.style.paddingTop = "0";
-          } else {
-            el.style.paddingTop = "70px";
-          }
-        }
+    function padSuccessAdviceText(breakpointHit, el) {
+      if (breakpointHit.matches) { // If media query matches
+        el.style.paddingTop = "0";
+      } else {
+        el.style.paddingTop = "70px";
+      }
+    }
 
     </script>
   </body>
