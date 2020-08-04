@@ -6,19 +6,19 @@ let options = {
 };
 
 export async function getSheetId() {
-	const response = await wixData.query("config").eq('title', 'sheet id').find(options);
-	if(response.items.length === 0) return null;
-	return response.items[0].value;
+	return getConfigData('sheet id');
 }
 
 export async function getTokens() {
-	const response = await wixData.query("config").eq('title', 'refresh token').find(options);
-	if(response.items.length === 0) return null;
-	return response.items[0].value;
+	return getConfigData('refresh token');
 }
 
 export async function getClientConfig() {
-	const response = await wixData.query("config").eq('title', 'client config').find(options);
+	return getConfigData('client config');
+}
+
+async function getConfigData(key) {
+	const response = await wixData.query("config").eq('title', key).find(options);
 	if(response.items.length === 0) return null;
 	return response.items[0].value;
 }
