@@ -1,4 +1,5 @@
 const { google } = require("googleapis");
+const sheets = google.sheets('v4');
 import { createClient, getKeyWorkerFormSheetId, getMapSheetId, getTokens } from 'backend/common-googleSheet'
 
 async function createAuthorizedClient() {
@@ -21,10 +22,15 @@ export async function saveFormData(values) {
 	return insertRow(values, authorizedAuthClient, keyWorkerFormsheetId);
 }
 
-async function insertRow(values, authClient, ssID) {
-	var sheets = google.sheets('v4');
+export async function getMapData() {
+	const authorizedAuthClient = await createAuthorizedClient();
+	const mapSheetId = await getMapSheetId();
+	return getMapKeyWorkerData(authorizedAuthClient, mapSheetId);
+}
+
+async function insertRow(values, authClient, ssId) {
 	const request = {
-		spreadsheetId: ssID,  // The ID of the spreadsheet to update.
+		spreadsheetId: ssId,  // The ID of the spreadsheet to update.
 		valueInputOption: 'RAW',  // How the input data should be interpreted.
 		insertDataOption: 'INSERT_ROWS',  // How the input data should be inserted.
 		range: 'A1:A2', // The A1 notation of a range to search
@@ -41,5 +47,18 @@ async function insertRow(values, authClient, ssID) {
 		return (await sheets.spreadsheets.values.append(request)).data;
 	} catch (err) {
 		console.log("error in append values" + err);
+	}
+}
+
+async function getMapKeyWorkerData(authClient, ssId) {
+	const request = {
+		spreadsheetId: ssId,  // The ID of the spreadsheet to retrieve data from.
+		auth: authClient,
+	  };
+	try {
+		return (await sheets.spreadsheets.get(request)).data;
+	}
+	catch (err) {
+		console.log("error in get values" + err);
 	}
 }

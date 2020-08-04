@@ -1,5 +1,10 @@
-import { saveFormData } from '../backend/googleSheet';
+import { saveFormData, getMapData } from 'backend/googleSheet';
+
 $w.onReady(function () {
+	// load map data
+	let keyworkMap = $w('#html6');
+	let mapData = getMapData();
+	keyworkMap.postMessage(mapData);
 	let postcardForm = $w('#html2'); 
 	postcardForm.scrolling = 'no';
   	postcardForm.onMessage(event => 
@@ -15,5 +20,5 @@ $w.onReady(function () {
 			}
 			else console.log("not ok");
 		});
-	  });
+	});
 });
