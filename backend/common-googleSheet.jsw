@@ -5,8 +5,12 @@ let options = {
 	"suppressAuth": true // suppress db auth to allow secure db permissions
 };
 
-export async function getSheetId() {
-	return getConfigData('sheet id');
+export async function getKeyWorkerFormSheetId() {
+	return getConfigData('key worker form sheet id');
+}
+
+export async function getMapSheetId() {
+	return getConfigData('map sheet id');
 }
 
 export async function getTokens() {

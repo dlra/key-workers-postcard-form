@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-import { createClient, getSheetId, getTokens } from 'backend/common-googleSheet'
+import { createClient, getKeyWorkerFormSheetId, getMapSheetId, getTokens } from 'backend/common-googleSheet'
 
 async function createAuthorizedClient() {
 	try {
@@ -17,8 +17,8 @@ async function createAuthorizedClient() {
 
 export async function saveFormData(values) {
 	const authorizedAuthClient = await createAuthorizedClient();
-	const sheetId = await getSheetId();
-	return insertRow(values, authorizedAuthClient, sheetId);
+	const keyWorkerFormsheetId = await getKeyWorkerFormSheetId();
+	return insertRow(values, authorizedAuthClient, keyWorkerFormsheetId);
 }
 
 async function insertRow(values, authClient, ssID) {
