@@ -54,9 +54,10 @@ async function getMapKeyWorkerData(authClient, ssId) {
 	const request = {
 		spreadsheetId: ssId,  // The ID of the spreadsheet to retrieve data from.
 		auth: authClient,
+		ranges: 'A1:Z1000'
 	  };
 	try {
-		return (await sheets.spreadsheets.get(request)).data;
+		return (await sheets.spreadsheets.values.batchGet(request)).data;
 	}
 	catch (err) {
 		console.log("error in get values" + err);

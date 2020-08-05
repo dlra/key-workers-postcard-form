@@ -30,7 +30,27 @@
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoiZGFuc2VsbCIsImEiOiJja2N6ZWZrbmEwaXd5MnRwZ3dsaHppeHhmIn0.YePXqg-vYHxhjQ1HQ4hdAw'
     }).addTo(myMap);
+    
+    listenForDataMessage();
+        
+    function centreToPoint(e, point) {
+        myMap.setView(e.latlng);
+    }
 
+
+    function listenForDataMessage() {
+      window.onmessage = (event =>
+      {
+          addMapKeyWorkersToMap(event.data);
+      });
+    }
+
+    function addMapKeyWorkersToMap(data) {
+        //var markerPoint = [51.4, -0.17];
+        var markerPoint = data.valueRanges[0].values[1];
+        var marker = L.marker(markerPoint).addTo(myMap).on('click', centreToPoint);
+        marker.bindPopup('<p><b>Jon</b><br/>Teacher</p>');
+    }
 </script>
 
 </html>

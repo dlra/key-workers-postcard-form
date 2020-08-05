@@ -1,10 +1,13 @@
 import { saveFormData, getMapData } from 'backend/googleSheet';
 
-$w.onReady(function () {
+$w.onReady(async function () {
 	// load map data
-	let keyworkMap = $w('#html6');
-	let mapData = getMapData();
+	let keyworkMap = $w('#html1');
+	keyworkMap.scrolling = 'no';
+	let mapData = await getMapData();
 	keyworkMap.postMessage(mapData);
+	
+	// set up form submission
 	let postcardForm = $w('#html2'); 
 	postcardForm.scrolling = 'no';
   	postcardForm.onMessage(event => 
