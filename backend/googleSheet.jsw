@@ -24,7 +24,7 @@ export async function saveFormData(values) {
 
 export async function getMapData() {
 	const authorizedAuthClient = await createAuthorizedClient();
-	const mapSheetId = await getMapSheetId();
+	const mapSheetId = await getKeyWorkerFormSheetId();
 	return getMapKeyWorkerData(authorizedAuthClient, mapSheetId);
 }
 
