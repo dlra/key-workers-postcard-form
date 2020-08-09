@@ -16,6 +16,12 @@
 </head>
 <div id="mapId"></div>
 <script>
+    const idFieldLabel = "UserId";
+    const nameFieldLabel = "First name";
+    const occupationLabel = "Occupation";
+    const latitudeLabel = "Latitude";
+    const longitudeLabel = "Longitude";
+
     var myMap = L.map('mapId', {
         center: [51.436, -0.219],
         zoom: 11.8,
@@ -37,7 +43,6 @@
         myMap.setView(e.latlng);
     }
 
-
     function listenForDataMessage() {
       window.onmessage = (event =>
       {
@@ -45,11 +50,36 @@
       });
     }
 
+    function dictionaryById(data) {
+        var keyWorkerRecordsWithHeaders = data.valueRanges[0];
+        var record;
+        var headers = keyWorkerRecordsWithHeaders.values[0];
+        var id = headers[idFieldLabel];
+        var dict = {}
+        for (let j = 1; j < keyWorkerRecordsWithHeaders.values.length; j++) {
+            var record = {};
+            for (let i = 0; i < headers.length; i++) {
+                record[headers[i]] = keyWorkerRecordsWithHeaders.values[j][i];
+            }
+            dict[record[id]] = record;
+        }
+
+        return dict;
+    }
+
     function addMapKeyWorkersToMap(data) {
         //var markerPoint = [51.4, -0.17];
-        var markerPoint = data.valueRanges[0].values[1];
-        var marker = L.marker(markerPoint).addTo(myMap).on('click', centreToPoint);
-        marker.bindPopup('<p><b>Jon</b><br/>Teacher</p>');
+        var dict = dictionaryById(data);
+        var firstName, occupation;
+        for (let i = 0; i < dict.length; i++) {
+            firstName = dict[i][nameFieldLabel];
+            occupation = dict[i][occupationLabel];
+            var markerPoint = [dict[i][latitudeLabel], dict[i][longitudeLabel]];
+            var marker = L.marker(markerPoint).addTo(myMap).on('click', centreToPoint);
+            marker.bindPopup('<p><b>Jon</b><br/>Teacher</p>');
+        }
+
+
     }
 </script>
 
