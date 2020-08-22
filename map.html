@@ -21,6 +21,7 @@
     const occupationLabel = "Occupation";
     const latitudeLabel = "Latitude";
     const longitudeLabel = "Longitude";
+    const storyLabel = "Covid Experience";
 
     var myMap = L.map('mapId', {
         center: [51.436, -0.219],
@@ -73,9 +74,10 @@
         for (let i = 1; i <= Object.keys(dict).length; i++) {
             firstName = dict[i][nameFieldLabel];
             occupation = dict[i][occupationLabel];
+            story = dict[i][storyLabel];
             markerPoint = [dict[i][latitudeLabel], dict[i][longitudeLabel]];
             marker = L.marker(markerPoint).addTo(myMap).on('click', centreToPoint);
-            marker.bindPopup('<p><b>' + firstName + '</b><br/>' + occupation + '</p>');
+            marker.bindPopup('<p><b>' + firstName + '</b><br/>' + occupation + '<br/><i>\"' + story + '\"</i>' + '</p>');
         }
     }
 </script>
